@@ -29,7 +29,11 @@ module.exports = (sequelize, Sequelize) => {
         },
         user_id: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: false,
+            references: {
+                model: 'users',
+                key: 'user_id'
+            }
         }
     });
     return Task;

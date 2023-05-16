@@ -11,7 +11,11 @@ module.exports = (sequelize, Sequelize) => {
         },
         task_id: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: false,
+            references: {
+                model: 'tasks',
+                key: 'task_id'
+            }
         }
     });
     return Task_done;

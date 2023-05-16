@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TIME
         },
         start_date: {
-            type: Sequelize.DATE
+            type: Sequelize.DATEONLY
         },
         repeat: {
             type: Sequelize.STRING

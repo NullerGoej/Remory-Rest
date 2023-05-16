@@ -34,6 +34,14 @@ module.exports = (sequelize, Sequelize) => {
                 model: 'users',
                 key: 'user_id'
             }
+        },
+        category_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'categories',
+                key: 'category_id'
+            }
         }
     });
     return Task;

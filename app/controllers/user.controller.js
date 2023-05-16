@@ -11,7 +11,9 @@ exports.create = (req, res) => {
     }
 
     const user = {
-        name: req.body.name
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
     };
 
     User.create(user)
@@ -26,13 +28,6 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const Telephone = req.query.Telephone;
-    var condition = Telephone ? {
-        Telephone: {
-            [Op.like]: `%${Telephone}%`
-        }
-    } : null;
-
     User.findAll({ where: condition })
         .then(data => {
             res.send(data);

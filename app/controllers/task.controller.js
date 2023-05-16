@@ -11,8 +11,9 @@ exports.create = (req, res) => {
     }
 
     const task = {
-        Name: req.body.Name,
-        Type: req.body.Type
+        title: req.body.title,
+        description: req.body.description,
+        user_id: req.body.user_id
     };
 
     Task.create(task)
@@ -27,13 +28,6 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const Type = req.query.Type;
-    var condition = Type ? {
-        Type: {
-            [Op.like]: `%${Type}%`
-        }
-    } : null;
-
     Task.findAll({ where: condition })
         .then(data => {
             res.send(data);

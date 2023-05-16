@@ -3,7 +3,7 @@ const User = db.users;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.Name) {
+    if (!req.body.name) {
         res.status(400).send({
             message: "Content cannot be empty!"
         });

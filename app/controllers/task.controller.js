@@ -3,7 +3,7 @@ const Task = db.tasks;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.Name) {
+    if (!req.body.title) {
         res.status(400).send({
             message: "Content cannot be empty!"
         });
@@ -13,6 +13,11 @@ exports.create = (req, res) => {
     const task = {
         title: req.body.title,
         description: req.body.description,
+        time: req.body.time,
+        start_date: req.body.start_date,
+        repeat: req.body.repeat,
+        reminder: req.body.reminder,
+        gps: req.body.gps,
         user_id: req.body.user_id
     };
 

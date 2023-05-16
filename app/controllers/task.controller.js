@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Task.findAll({ where: condition })
+    Task.findAll()
         .then(data => {
             res.send(data);
         })

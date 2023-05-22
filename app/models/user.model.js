@@ -19,5 +19,13 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
+    User.associate = function(models) {
+        User.hasMany(models.tasks, {
+            as: 'tasks',
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE'
+        })
+    };
+
     return User;
 };

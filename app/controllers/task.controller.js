@@ -18,7 +18,8 @@ exports.create = (req, res) => {
         repeat: req.body.repeat,
         reminder: req.body.reminder,
         gps: req.body.gps,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        category_id: req.body.category_id
     };
 
     Task.create(task)
@@ -34,6 +35,91 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     Task.findAll()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({ Message: err.message || "Some error occurred while retrieving Tasks." });
+        });
+};
+
+exports.findToday = (req, res) => {
+    const moment = require('moment');
+    const TODAY_START = moment().format('YYYY-MM-DD 00:00');
+    const TODAY_END = moment().format('YYYY-MM-DD 23:59');
+    const NOW = moment().format();
+    const TMR = moment().add(1, 'days').format();
+    const DOW = moment().day();
+
+    Task.findAll({
+            where: {
+                [Op.or]: [{
+                        start_date: {
+                            [Op.between]: [
+                                TODAY_START,
+                                TODAY_END,
+                            ]
+                        },
+                        time: {
+                            [Op.or]: [{
+                                [Op.between]: [
+                                    NOW,
+                                    TODAY_END,
+                                ]
+                            }, null]
+                        },
+                        repeat: null
+                    },
+                    {
+                        start_date: {
+                            [Op.lte]: TMR
+                        },
+                        time: {
+                            [Op.between]: [
+                                TODAY_START,
+                                TMR,
+                            ]
+                        },
+                        repeat: null
+                    },
+                    {
+                        start_date: {
+                            [Op.gte]: TODAY_START
+                        },
+                        time: {
+                            [Op.or]: [{
+                                [Op.between]: [
+                                    NOW,
+                                    TODAY_END,
+                                ]
+                            }, null]
+                        },
+                        repeat: {
+                            [Op.like]: "%" + DOW + "%"
+                        }
+                    },
+                    {
+                        start_date: {
+                            [Op.gte]: TMR
+                        },
+                        time: {
+                            [Op.between]: [
+                                TODAY_START,
+                                TMR,
+                            ]
+                        },
+                        repeat: {
+                            [Op.like]: "%" + ((DOW % 7) + 1) + "%"
+                        }
+                    }
+                ]
+
+            },
+            include: [{
+                model: db.tasks_done,
+                required: false
+            }]
+        })
         .then(data => {
             res.send(data);
         })

@@ -27,7 +27,14 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Category.findAll()
+    const UserID = req.query.userid;
+    var condition = UserID ? {
+        user_id: {
+            [Op.eq]: UserID
+        }
+    } : null;
+
+    Category.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })

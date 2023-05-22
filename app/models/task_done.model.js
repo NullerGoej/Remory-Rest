@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         timestamp: {
             type: Sequelize.DATE,
-            allowNull: false
+            allowNull: true
         },
         task_id: {
             type: Sequelize.INTEGER,
@@ -19,13 +19,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    Task_done.associate = function(models) {
-        Task_done.belongsToMany(models.tasks, {
-            as: 'tasks',
-            through: 'tasksTask_done',
-            foreignKey: 'task_id',
-            onDelete: 'CASCADE'
-        })
-    };
     return Task_done;
 };

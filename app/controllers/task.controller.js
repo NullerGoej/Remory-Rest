@@ -49,6 +49,7 @@ exports.findToday = (req, res) => {
     const TODAY_END = moment().format('YYYY-MM-DD 23:59');
     const NOW = moment().format();
     const TMR = moment().add(1, 'days').format();
+    const YTD = moment().add(-1, 'days').format();
     const DOW = moment().day();
 
     Task.findAll({
@@ -84,7 +85,7 @@ exports.findToday = (req, res) => {
                     },
                     {
                         start_date: {
-                            [Op.gte]: TODAY_START
+                            [Op.lte]: TODAY_START
                         },
                         time: {
                             [Op.or]: [{
@@ -100,7 +101,7 @@ exports.findToday = (req, res) => {
                     },
                     {
                         start_date: {
-                            [Op.gte]: TMR
+                            [Op.lte]: TMR
                         },
                         time: {
                             [Op.between]: [
@@ -117,7 +118,21 @@ exports.findToday = (req, res) => {
             },
             include: [{
                 model: db.tasks_done,
-                required: false
+                required: false,
+                limit: 1,
+                order: [
+                    [
+                        'timestamp', 'DESC'
+                    ]
+                ],
+                where: {
+                    timestamp: {
+                        [Op.between]: [
+                            YTD,
+                            NOW
+                        ]
+                    }
+                }
             }]
         })
         .then(data => {

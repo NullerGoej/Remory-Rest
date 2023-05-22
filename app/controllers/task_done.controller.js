@@ -11,8 +11,7 @@ exports.create = (req, res) => {
     }
 
     const task_done = {
-        task_id: req.body.task_id,
-        timestamp: req.body.timestamp
+        task_id: req.body.task_id
     };
 
     Task_done.create(task_done)

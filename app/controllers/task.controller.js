@@ -136,7 +136,16 @@ exports.findToday = (req, res) => {
             }]
         })
         .then(data => {
-            res.send(data);
+            let array = [];
+            data.forEach(element => {
+                if (element.dataValues.task_dones.length != 0) {
+                    element.dataValues.checked = true;
+                } else {
+                    element.dataValues.checked = false;
+                }
+                array.push(element);
+            });
+            res.send(array);
         })
         .catch(err => {
             res.status(500).send({ Message: err.message || "Some error occurred while retrieving Tasks." });

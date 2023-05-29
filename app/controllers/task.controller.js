@@ -112,7 +112,7 @@ exports.findToday = (req, res) => {
                         },
                         time: {
                             [Op.between]: [
-                                NOW,
+                                TODAY_START,
                                 TMR,
                             ]
                         },

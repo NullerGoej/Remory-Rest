@@ -116,6 +116,11 @@ exports.findToday = (req, res) => {
                 ]
 
             },
+            order: [
+                [
+                    'time', 'ASC'
+                ]
+            ],
             include: [{
                 model: db.tasks_done,
                 required: false,

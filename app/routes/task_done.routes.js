@@ -18,5 +18,7 @@ module.exports = app => {
     // Delete a Task with id
     router.delete("/:id", tasks_done.delete);
 
+    router.delete("/24h/:id", tasks_done.delete24h);
+
     app.use('/api/tasks_done', router);
 };

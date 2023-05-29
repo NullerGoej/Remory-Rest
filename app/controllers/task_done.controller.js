@@ -82,3 +82,33 @@ exports.delete = (req, res) => {
             res.status(500).send({ Message: "Could not delete task_done with id=" + task_done_id });
         });
 };
+
+exports.delete24h = (req, res) => {
+    const task_id = req.params.id;
+
+    const moment = require('moment');
+    const NOW = moment().format();
+    const YTD = moment().add(-1, 'days').format();
+
+    Task_done.destroy({
+            where: {
+                task_id: task_id,
+                timestamp: {
+                    [Op.between]: [
+                        YTD,
+                        NOW
+                    ]
+                }
+            }
+        })
+        .then(num => {
+            if (num > 0) {
+                res.send({ Message: `${num} task_dones where deleted` });
+            } else {
+                res.send({ Message: `Couldn't find any task_dones with task_id = ${task_id}` });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ Message: "Could not delete task_done with task_id=" + task_id });
+        });
+}

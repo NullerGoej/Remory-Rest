@@ -75,11 +75,14 @@ exports.findToday = (req, res) => {
                     },
                     {
                         start_date: {
-                            [Op.lte]: TMR
+                            [Op.between]: [
+                                NOW,
+                                TMR,
+                            ]
                         },
                         time: {
                             [Op.between]: [
-                                TODAY_START,
+                                NOW,
                                 TMR,
                             ]
                         },
@@ -109,7 +112,7 @@ exports.findToday = (req, res) => {
                         },
                         time: {
                             [Op.between]: [
-                                TODAY_START,
+                                NOW,
                                 TMR,
                             ]
                         },

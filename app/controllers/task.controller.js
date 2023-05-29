@@ -69,7 +69,9 @@ exports.findToday = (req, res) => {
                                 ]
                             }, null]
                         },
-                        repeat: null
+                        repeat: {
+                            [Op.or]: ["", null]
+                        },
                     },
                     {
                         start_date: {
@@ -81,7 +83,9 @@ exports.findToday = (req, res) => {
                                 TMR,
                             ]
                         },
-                        repeat: null
+                        repeat: {
+                            [Op.or]: ["", null]
+                        },
                     },
                     {
                         start_date: {

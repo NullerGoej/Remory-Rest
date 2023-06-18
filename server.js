@@ -2,38 +2,32 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-var fs = require('fs');
-var http = require('http');
-var https = require('https');
-var privateKey = fs.readFileSync('sslcert/privkey.pem', 'utf8');
-var certificate = fs.readFileSync('sslcert/cert.pem', 'utf8');
-
 const app = express();
 app.use(cors());
 
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
 const db = require("./app/models");
 
 db.sequelize.sync();
 
+// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
+// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// simple route
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to remory API" });
+  res.json({ message: "Welcome to one piece application." });
 });
 
-require("./app/routes/task.routes")(app);
-require("./app/routes/user.routes")(app);
-require("./app/routes/category.routes")(app);
-require("./app/routes/task_done.routes")(app);
-
-var credentials = { key: privateKey, cert: certificate };
-
-// your express configuration here
-
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
-
-httpServer.listen(8080);
-httpsServer.listen(8443);
+require("./app/routes/pirate.routes")(app);
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});

@@ -1,23 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-    const Category = sequelize.define("category", {
-        category_id: {
+    const Pirate = sequelize.define("pirate", {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        title: {
+        name: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        user_id: {
+        age: {
             type: Sequelize.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'users',
-                key: 'user_id'
-            }
+            allowNull: false
+        },
+        pirateCrew: {
+            type: Sequelize.STRING,
+            allowNull: false
         }
     });
 
-    return Category;
+    return Pirate;
 };

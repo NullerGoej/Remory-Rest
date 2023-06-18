@@ -1,12 +1,12 @@
 {
-    "name": "pirate-rest",
+    "name": "remory-rest",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "ken",
+    "author": "Gruppe 2",
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.20.2",
